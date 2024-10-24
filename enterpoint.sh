@@ -64,7 +64,7 @@ args=(
 # Create container if not
 if [ -z "$(docker ps -a -q -f name=${CONTAINER_NAME})" ]; then
     echo -e "\e[32mContainer ${CONTAINER_NAME} not existing. Create and run the container\e[0m"
-    docker run "${args[@]}"./en 
+    docker run "${args[@]}"
 else
     # Start the stopped container
     if [ -z "$(docker ps -q -f name=${CONTAINER_NAME})" ]; then
