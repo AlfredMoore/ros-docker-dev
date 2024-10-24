@@ -2,22 +2,16 @@ group "default" {
   targets = ["panda-noetic"]
 }
 
-variable "IMAGE_TAG" {
-  default = "WiscHCI/panda-noetic"
-}
+#############################################################
+# These variables are passed from env.sh
+variable "IMAGE_TAG" { default = "WiscHCI/panda-noetic"}
+variable "USERNAME" { default = "panda" }
+variable "USER_ID" { default = "1000" }
+variable "GROUP_ID" { default = "1000" }
+#############################################################
 
-variable "USERNAME" {
-  default = "panda"
-}
-
-variable "USER_ID" {
-  default = "1000"
-}
-
-variable "GROUP_ID" {
-  default = "1000"
-}
-
+# Editable 
+# These are dockerfile path and building configurations
 target "panda-noetic" {
   context = "."
   dockerfile = "panda-noetic.Dockerfile"

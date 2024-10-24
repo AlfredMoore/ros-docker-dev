@@ -1,4 +1,3 @@
-
 FROM osrf/ros:noetic-desktop-full
 
 ######################################################################
@@ -67,58 +66,15 @@ WORKDIR ${HOME}
 ### End ##############################################################
 ######################################################################
 
-
-
 # Editable from now
-######################################################################
-### Git ##############################################################
-######################################################################
-USER ${USERNAME}
-# ssh forward is only valid to root, so we should specify it owned by uid
-RUN mkdir -p -m 0700 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
-RUN --mount=type=ssh,uid=${USER_ID} \
-    git clone git@github.com:AlfredMoore/HANDREC_Panda.git --recursive
-### End ##############################################################
-######################################################################
-
-
-
-######################################################################
-### Panda ROS Dev ####################################################
-######################################################################
-# Install libfranka and franka-ros
-USER root
-RUN apt-get update && apt-get install --yes \
-    ros-noetic-libfranka ros-noetic-franka-ros
-
-# Install ranged-IK Python dependencies
-RUN pip3 install \
-    readchar \
-    PyYaml \
-    urdf-parser-py \
-    future \
-    pynput
-
-# Install ranged-IK Rust and Cargo dependencies
-## Switch to new user
-USER ${USERNAME}
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-ENV PATH="/home/${USERNAME}/.cargo/bin:${PATH}"
-### End ##############################################################
-######################################################################
-
-
-
-######################################################################
-### oh-my-zsh ########################################################
-######################################################################
-# Setup oh-my-zsh
-USER root
-RUN apt install fonts-powerline
-USER ${USERNAME}
-# Install oh-my-zsh quietly
-RUN wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true
-# Copy .zshrc config
-COPY ./configs/oh-my-zsh.zshrc ${HOME}/.zshrc
-### End ##############################################################
-######################################################################
+# ######################################################################
+# ### Git ##############################################################
+# ######################################################################
+# USER ${USERNAME}
+# # SSH forward is only valid to root, so we should specify it owned by uid
+# # Befofre ssh frowarding, you should firstlt ssd-add your key to ssh agent
+# RUN mkdir -p -m 0700 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
+# RUN --mount=type=ssh,uid=${USER_ID} \
+#     git clone git@github.com:<>/<>.git
+# ### End ##############################################################
+# ######################################################################

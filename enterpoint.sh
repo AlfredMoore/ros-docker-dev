@@ -17,8 +17,8 @@ fi
 # GUI applications
 xhost +local:docker > /dev/null
 
+# Arguments to run container
 args=(
-
     # --rm    # autoremove the container
     --name "${CONTAINER_NAME}"
 
@@ -45,9 +45,9 @@ args=(
     --volume="/etc/passwd:/etc/passwd:ro"
     --volume="/etc/shadow:/etc/shadow:ro"
 
-    # GPUs
+    # GPU device
 
-    # pid
+    # PID exposure 
 
     # Realtime Kernel, if you are in RTkernel, uncomment the followings
     # --privileged
@@ -61,10 +61,12 @@ args=(
     "${SHELL}"
 )
 
+# Create container if not
 if [ -z "$(docker ps -a -q -f name=${CONTAINER_NAME})" ]; then
     echo -e "\e[32mContainer ${CONTAINER_NAME} not existing. Create and run the container\e[0m"
     docker run "${args[@]}"./en 
 else
+    # Start the stopped container
     if [ -z "$(docker ps -q -f name=${CONTAINER_NAME})" ]; then
         echo -e "\e[32mContainer ${CONTAINER_NAME} existing but stopped. Start and run the container\e[0m"
         docker start ${CONTAINER_NAME}
@@ -72,6 +74,7 @@ else
                     --user="${USER_ID}:${GROUP_ID}" \
                     --workdir "/home/${USERNAME}/" \
                     "${CONTAINER_NAME}" "${SHELL}"
+    # Enter to a runnning container
     else
         echo -e "\e[32mContainer ${CONTAINER_NAME} existing and running. Enter the container with a new section\e[0m"
         docker exec --interactive --tty \
