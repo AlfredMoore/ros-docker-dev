@@ -5,6 +5,13 @@ To Create Image, Run Container or Open another section in Container, please use
 ```bash
 ./enterpoint.sh
 ```
+
+If you want to build with no-cache, which keeps docker content up to date but takes much longer time, use
+```bash
+export NOCACHE=true
+./enterpoint.sh
+```
+
 You should firstly install [Docker Engine](https://docs.docker.com/engine/install/ubuntu/) on your Ubuntu. Then [manage docker as a non-root user](https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user), to enable `docker` instead of `sudo docker`.
 
 NOTE: Do not install Docker Desktop. It is different from the Docker Engine and not so friendly to docker development.

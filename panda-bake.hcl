@@ -8,6 +8,8 @@ variable "IMAGE_TAG" { default = "WiscHCI/panda-noetic"}
 variable "USERNAME" { default = "panda" }
 variable "USER_ID" { default = "1000" }
 variable "GROUP_ID" { default = "1000" }
+variable "NOCACHE" { default = false }
+
 #############################################################
 
 # Editable 
@@ -21,6 +23,6 @@ target "panda-noetic" {
     GROUP_ID = "${GROUP_ID}"
   }
   tags = ["${IMAGE_TAG}"]
-  no-cache = false    # set false in Development, true in Deployment
+  no-cache = "${NOCACHE}"    # set false in Development, true in Deployment
   ssh = ["default"]
 }
