@@ -21,6 +21,6 @@ target "panda-noetic" {
     GROUP_ID = "${GROUP_ID}"
   }
   tags = ["${IMAGE_TAG}"]
-  no-cache = false
+  no-cache = false    # set false in Development, true in Deployment
   ssh = ["default"]
 }

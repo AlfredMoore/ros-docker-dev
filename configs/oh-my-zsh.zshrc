@@ -105,11 +105,20 @@ source $ZSH/oh-my-zsh.sh
 
 # Whether inside the container
 if [ ! -f /.dockerenv ]; then
-    echo -e "\e[33mNot running inside a container\e[0m";
+    echo -e "\e[33mNOTE: Not RUNING inside a container\e[0m"
     # echo "Add your scripts here..."
    
 else
-    echo -e "\e[33mRunning inside a container\e[0m";
-    # echo "Add your scripts here..."
+    echo -e "\e[33mNOTE: RUNING inside a container\e[0m"
+    echo -e "\e[33mTesting SSH forwarding\e[0m" && ssh -T git@github.com
+
+    # ROS version detection
+    if [ -d "/opt/ros/noetic" ]; then
+        echo -e "\e[33mSource ROS Noetic configuration\e[0m" && source /opt/ros/noetic/setup.zsh
+    elif [ -d "/opt/ros/humble" ]; then
+        echo -e "\e[33mSource ROS Humble configuration\e[0m" && source /opt/ros/humble/setup.zsh
+    else
+        echo -e "\e[33mNeither of ROS Noetic Nor Humble detected\e[0m"
+    fi
 fi
 
