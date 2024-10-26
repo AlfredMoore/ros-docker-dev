@@ -18,7 +18,7 @@ NOTE: Do not install Docker Desktop. It is different from the Docker Engine and 
 
 ## Features:
  * Isolated: Container has an isolated env from the host but keeps the host user and partial configs
-    * Optional you can volume directories to the container. Please check this in branch []()
+    * Optional you can volume directories to the container. Please check this in branch [volumed](https://github.com/AlfredMoore/ros-docker-dev/tree/volumed)
  * User spoofing: Container has the same username and password as the host.
  * SSH forwarding: Container has the same ssh agent as the root. No need to add any additional SSH key pair. You can use directly use `git` via SSH.
  * Oh-my-zsh: Container has an configured oh-my-zsh. It is editable in the [configs/oh-my-zsh.zshrc](./configs/oh-my-zsh.zshrc).
