@@ -17,7 +17,8 @@ You should firstly install [Docker Engine](https://docs.docker.com/engine/instal
 NOTE: Do not install Docker Desktop. It is different from the Docker Engine and not so friendly to docker development.
 
 ## Features:
- * Isolated: Container would only change this repository by voluming.
+ * Isolated: Container has an isolated env from the host but keeps the host user and partial configs
+    * Optional you can volume directories to the container. Please check this in branch []()
  * User spoofing: Container has the same username and password as the host.
  * SSH forwarding: Container has the same ssh agent as the root. No need to add any additional SSH key pair. You can use directly use `git` via SSH.
  * Oh-my-zsh: Container has an configured oh-my-zsh. It is editable in the [configs/oh-my-zsh.zshrc](./configs/oh-my-zsh.zshrc).

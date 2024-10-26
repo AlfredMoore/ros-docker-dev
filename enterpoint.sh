@@ -56,9 +56,10 @@ args=(
     # --privileged
     # --cap-add=SYS_NICE
 
-    # Workspace. Volume this repo
-    --volume="$(dirname $(dirname "$0")):/home/${USERNAME}/$(basename $(dirname "$0"))"
-    --workdir "/home/${USERNAME}/$(basename $(dirname "$0"))"
+    # Workspace
+    # --volume="$(dirname $(dirname $(realpath "$0"))):/home/${USERNAME}/$(basename $(dirname "$0"))"     # Volume the parent directory of this docker repo
+    # --workdir "/home/${USERNAME}/$(basename $(dirname "$0"))"                                           # cd the volumed directory
+    --workdir "/home/${USERNAME}"
 
     # start image
     "${IMAGE_TAG}"

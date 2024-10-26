@@ -8,7 +8,7 @@ fi
 
 # Image Tag and  Container Name
 export IMAGE_TAG="WiscHCI/panda-noetic:${GIT_LABEL}"
-export CONTAINER_NAME="ros-panda-noetic-isolated"
+export CONTAINER_NAME="ros-panda-noetic"
 
 # User configs
 export USERNAME=$(whoami)
