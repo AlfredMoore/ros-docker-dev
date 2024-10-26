@@ -6,6 +6,9 @@ if [[ -z "$GIT_LABEL" ]]; then
     GIT_LABEL="$(git rev-parse --short HEAD)"
 fi
 
+# Get enterpoints's absolute directory path
+ENTERPOINT_DIR="$(dirname $(realpath "$0"))"
+
 # Image Tag and  Container Name
 export IMAGE_TAG="WiscHCI/panda-noetic:${GIT_LABEL}"
 export CONTAINER_NAME="ros-panda-noetic"

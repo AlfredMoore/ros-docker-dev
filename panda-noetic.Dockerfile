@@ -77,8 +77,8 @@ USER ${USERNAME}
 # SSH forward is only valid to root, so we should specify it owned by uid
 RUN mkdir -p -m 0700 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
 # It is better to volume current repo instead of clone an another one in container
-RUN --mount=type=ssh,uid=${USER_ID} \
-    git clone git@github.com:AlfredMoore/HANDREC_Panda.git --recursive
+# RUN --mount=type=ssh,uid=${USER_ID} \
+#     git clone git@github.com:AlfredMoore/HANDREC_Panda.git --recursive
 ### End ##############################################################
 ######################################################################
 
