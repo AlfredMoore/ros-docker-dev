@@ -56,8 +56,9 @@ args=(
     # --privileged
     # --cap-add=SYS_NICE
 
-    # Workspace
-    --workdir "/home/${USERNAME}/"
+    # Workspace. Volume this repo
+    --volume="$(dirname $(dirname "$0")):/home/${USERNAME}/$(basename $(dirname "$0"))"
+    --workdir "/home/${USERNAME}/$(basename $(dirname "$0"))"
 
     # start image
     "${IMAGE_TAG}"
