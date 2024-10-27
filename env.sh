@@ -7,7 +7,7 @@ if [[ -z "$GIT_LABEL" ]]; then
 fi
 
 # Image Tag and Container Name
-export IMAGE_TAG="WiscHCI/panda-noetic:${GIT_LABEL}"
+export IMAGE_TAG="WiscHCI/panda-ros:${GIT_LABEL}"
 export CONTAINER_NAME="ros-panda-noetic"
 
 # User configs
