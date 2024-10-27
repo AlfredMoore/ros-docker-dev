@@ -19,4 +19,4 @@ export GROUP_ID=$(id -g)
 # Volume Settings
 ENTERPOINT_DIR="$(dirname $(realpath "$0"))"    # Get enterpoints's absolute directory path
 export HOME_PATH="/home/${USERNAME}"
-export WORKSPACE_PATH="{HOME_PATH}/workspace"
+export WORKSPACE_PATH="${HOME_PATH}/workspace"
