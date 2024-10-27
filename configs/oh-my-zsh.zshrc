@@ -111,14 +111,14 @@ if [ ! -f /.dockerenv ]; then
 else
     echo -e "\e[33mNOTE: RUNING inside a container\e[0m"
     echo -e "\e[33mTesting SSH forwarding\e[0m" && ssh -T git@github.com
-
+    echo "${WORKSPACE_PATH} branch: $(git -C ${WORKSPACE_PATH} branch --show-current ) commit: $(git -C ${WORKSPACE_PATH} git rev-parse --short HEAD)"
     # ROS version detection
     if [ -d "/opt/ros/noetic" ]; then
         echo -e "\e[33mSource ROS Noetic configuration\e[0m" && source /opt/ros/noetic/setup.zsh
     elif [ -d "/opt/ros/humble" ]; then
         echo -e "\e[33mSource ROS Humble configuration\e[0m" && source /opt/ros/humble/setup.zsh
     else
-        echo -e "\e[33mNeither of ROS Noetic Nor Humble detected\e[0m"
+        echo -e "\e[33mNeither ROS Noetic Nor Humble detected\e[0m"
     fi
 fi
 

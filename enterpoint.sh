@@ -57,8 +57,9 @@ args=(
     # --cap-add=SYS_NICE
 
     # Workspace
-    --volume="$(dirname ${ENTERPOINT_DIR}):/home/${USERNAME}/workspace"     # Volume the parent directory of this docker repo to workspace
-    --workdir "/home/${USERNAME}/workspace"                                 # cd the volumed workspace
+    --volume="$(dirname ${ENTERPOINT_DIR}):${WORKSPACE_PATH}"   # Volume the parent of this docker repo to workspace
+    --workdir "${WORKSPACE_PATH}"                               # cd the volumed workspace
+    --env "WORKSPACE_PATH=${WORKSPACE_PATH}"
 
     # start image
     "${IMAGE_TAG}"

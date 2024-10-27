@@ -6,10 +6,7 @@ if [[ -z "$GIT_LABEL" ]]; then
     GIT_LABEL="$(git rev-parse --short HEAD)"
 fi
 
-# Get enterpoints's absolute directory path
-ENTERPOINT_DIR="$(dirname $(realpath "$0"))"
-
-# Image Tag and  Container Name
+# Image Tag and Container Name
 export IMAGE_TAG="WiscHCI/panda-noetic:${GIT_LABEL}"
 export CONTAINER_NAME="ros-panda-noetic"
 
@@ -18,3 +15,8 @@ export USERNAME=$(whoami)
 export USER_ID=$(id -u)
 export GROUP_ID=$(id -g)
 # export DISPLAY=${DISPLAY}
+
+# Volume Settings
+ENTERPOINT_DIR="$(dirname $(realpath "$0"))"    # Get enterpoints's absolute directory path
+export HOME_PATH="/home/${USERNAME}"
+export WORKSPACE_PATH="{HOME_PATH}/workspace"
