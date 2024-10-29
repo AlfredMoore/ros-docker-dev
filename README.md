@@ -3,7 +3,7 @@
 You could also check the latest [main branch README.md](https://github.com/AlfredMoore/ros-docker-dev/blob/main/README.md)
 
 ## Panda Noetic
-To Create Image, Run Container or Open another section in Container, please use
+To Create Image, Run Container or Open another section in Container, please `cd` to the `ros-docker-dev` directory then run the scripts. 
 ```bash
 ./enterpoint.sh
 ```
@@ -47,7 +47,8 @@ NOTE: Do not install Docker Desktop. It is different from the Docker Engine and 
    export CONTAINER_NAME="ros-panda-noetic"
    ```
 
-
+## e.g.
+![container example](./example.jpg)
 
 ## TODO ~~(TBD: lazy man)~~
 Update to docker compose run and build (docker compose documents are unclear).
