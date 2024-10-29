@@ -19,7 +19,10 @@ You should firstly install [Docker Engine](https://docs.docker.com/engine/instal
 NOTE: Do not install Docker Desktop. It is different from the Docker Engine and not so friendly to docker development.
 
 ## Features:
- * Isolated: Container has an isolated env from the host but keeps the host user and partial configs
+ * Volumed: Container volumed the parent folder(../ros-docker-dev) as the workspace in container. If you don't need it, please comment in the [enterpoint.sh](./enterpoint.sh)
+ ```bash
+ --volume="$(dirname ${ENTERPOINT_DIR}):${WORKSPACE_PATH}"   # Volume the parent of this docker repo to workspace
+ ``` 
  * User spoofing: Container has the same username and password as the host.
  * SSH forwarding: Container fetches the same ssh agent as the host (if you have set the ssh-agent in host). No need to add any additional SSH key pair. In the container you could directly use `git` via SSH.
  * Oh-my-zsh: Container has an configured oh-my-zsh. It is editable in the [configs/oh-my-zsh.zshrc](./configs/oh-my-zsh.zshrc).
