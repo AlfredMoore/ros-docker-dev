@@ -14,7 +14,7 @@ export NOCACHE=true
 ./enterpoint.sh
 ```
 
-You should firstly install [Docker Engine](https://docs.docker.com/engine/install/ubuntu/) on your Ubuntu. Then [manage docker as a non-root user](https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user), to enable `docker` instead of `sudo docker`.
+You should firstly install [Docker Engine](https://docs.docker.com/engine/install/ubuntu/) on your Ubuntu. Then [manage docker as a non-root user](https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user), to enable `docker <command>` instead of `sudo docker <conmmand>`
 
 NOTE: Do not install Docker Desktop. It is different from the Docker Engine and not so friendly to docker development.
 
