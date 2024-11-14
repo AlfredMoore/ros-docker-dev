@@ -105,6 +105,11 @@ RUN pip3 install \
 USER ${USERNAME}
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 ENV PATH="/home/${USERNAME}/.cargo/bin:${PATH}"
+
+# Realtime kernel
+USER root
+RUN addgroup realtime
+RUN usermod -a -G realtime ${USERNAME}
 ### End ##############################################################
 ######################################################################
 
