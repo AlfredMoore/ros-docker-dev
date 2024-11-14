@@ -77,14 +77,14 @@ else
         docker start ${CONTAINER_NAME}
         docker exec --interactive --tty \
                     --user="${USER_ID}:${GROUP_ID}" \
-                    --workdir "/home/${USERNAME}/" \
+                    --workdir "${WORKSPACE_PATH}"  \
                     "${CONTAINER_NAME}" "${SHELL}"
     # Enter to a runnning container
     else
         echo -e "\e[32mCONTAINER ${CONTAINER_NAME} existing and running. Enter the container with a new section\e[0m"
         docker exec --interactive --tty \
                     --user="${USER_ID}:${GROUP_ID}" \
-                    --workdir "/home/${USERNAME}/" \
+                    --workdir "${WORKSPACE_PATH}" \
                     "${CONTAINER_NAME}" "${SHELL}"
     fi
 fi
