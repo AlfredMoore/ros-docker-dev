@@ -12,12 +12,10 @@ To Create an Image, Run the Container or Open another section in Container, plea
 ```bash
 ./enterpoint.sh
 ```
-
-### Rebuild or Build with no cache
-If you want to rebuild the image with changed dockerfile or to build with no-cache for the latest dependencies, you could build with no cache by running the following scirpts. In this way, you could rebuild the image from scratch but spend much longer time.
-```bash
-./enterpoint.sh -c
-```
+### Options
+ * -c: use cache
+ * -b: use bash instead of zsh
+ * -r: enable realtime kernel
 
 ### Rebuild or Build with no cache
 If you want to rebuild the image with changed dockerfile or to build with no-cache for the latest dependencies, you could build with no cache by running the following scirpts. In this way, you could rebuild the image from scratch but spend much longer time.
@@ -39,7 +37,7 @@ If you want to rebuild the image with changed dockerfile or to build with no-cac
 
 ## Contribution
 ### [NIST_Benchmark](https://github.com/Wisc-HCI/NIST_Benchmark)
-:warning: **Note: In the container, you will use zsh intead of bash. `zsh` is pretty and more powerful with oh-my-zsh theme and auto-completion. But remember to `source /devel/setup.zsh` instead of `.bash`**
+:warning: **Note: In the container, you can use zsh intead of bash. `zsh` is pretty and more powerful with oh-my-zsh theme and auto-completion. But remember to `source /devel/setup.zsh` instead of `.bash`**
 
  * Some computers support directly `sudo apt install libfranka`, but some do not. So uncomment `RUN apt-get ...` in [panda-noetic.Dockerfile](./panda-noetic.Dockerfile) if it is possible, or you should build from source following [this](https://frankaemika.github.io/docs/installation_linux.html#building-from-source).
    ```Dockerfile
