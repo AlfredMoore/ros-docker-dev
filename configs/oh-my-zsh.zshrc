@@ -111,12 +111,12 @@ if [ ! -f /.dockerenv ]; then
 else
     echo -e "\n\e[33mNOTE:\e[0m RUNNING inside a container"
     echo -e "\nTesting \e[33mSSH\e[0m forwarding" && ssh -T git@github.com
-    echo -e "\nWORKSPACE \e[92m${WORKSPACE_PATH}\e[0m branch: \e[92m$(git -C ${WORKSPACE_PATH} branch --show-current )\e[0m commit: \e[92m$(git -C ${WORKSPACE_PATH} rev-parse --short HEAD)\e[0m"
+    echo -e "\nWORKSPACE \e[33m${WORKSPACE_PATH}\e[0m branch: \e[33m$(git -C ${WORKSPACE_PATH} branch --show-current )\e[0m commit: \e[33m$(git -C ${WORKSPACE_PATH} rev-parse --short HEAD)\e[0m"
     # ROS version detection
     if [ -d "/opt/ros/noetic" ]; then
-        echo -e "\nSource \e[92mROS Noetic\e[0m configuration\n" && source /opt/ros/noetic/setup.zsh
+        echo -e "\nSource \e[33mROS Noetic\e[0m configuration\n" && source /opt/ros/noetic/setup.zsh
     elif [ -d "/opt/ros/humble" ]; then
-        echo -e "\nSource \e[92mROS Humble\e[0m configuration\n" && source /opt/ros/humble/setup.zsh
+        echo -e "\nSource \e[33mROS Humble\e[0m configuration\n" && source /opt/ros/humble/setup.zsh
     else
         echo -e "\n\e[33mNeither ROS Noetic Nor Humble detected\e[0m\n"
     fi

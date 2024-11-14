@@ -13,9 +13,9 @@ To Create an Image, Run the Container or Open another section in Container, plea
 ./enterpoint.sh
 ```
 ### Options
- * -c: use cache
- * -b: use bash instead of zsh
- * -r: enable realtime kernel
+ * -n: Nocache or rebuild New image
+ * -b: use Bash instead of zsh
+ * -r: enable Realtime kernel
 
 ### Rebuild or Build with no cache
 If you want to rebuild the image with changed dockerfile or to build with no-cache for the latest dependencies, you could build with no cache by running the following scirpts. In this way, you could rebuild the image from scratch but spend much longer time.

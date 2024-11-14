@@ -6,25 +6,25 @@ set -o nounset
 source ./env.sh
 
 # Parse flags
-use_cache='false'
+no_cache='false'
 use_bash='false'
 use_realtime='false'
 
-while getopts 'cber' flag; do
+while getopts 'nbr' flag; do
   case "${flag}" in
-    c) use_cache='true' ;;
+    n) no_cache='true' ;;
     b) use_bash='true' ;;
     r) use_realtime='true' ;;
     *) error "Unexpected option ${flag}" ;;
   esac
 done
 
-if [ "${use_cache}" = 'true' ]; then
-    echo -e "Use \e[33mcache\e[0m to build the image"
-    export NOCACHE=false
-else
-    echo -e "Use \e[33mno cache\e[0m to build the image"
+if [ "${no_cache}" = 'true' ]; then
+    echo -e "Use \e[33mno cache\e[0m to build or rebuild the image"
     export NOCACHE=true
+else
+    echo -e "Use \e[33mcache\e[0m to build or rebuild the image"
+    export NOCACHE=false
 fi
 
 if [ "${use_bash}" = 'true' ]; then
@@ -36,20 +36,25 @@ else
 fi
 
 if [ "${use_realtime}" = 'true' ]; then
-    echo -e "Enable \e[33mRealtime Kernel\e[0m"
+    echo -e "Enable \e[33mRealtime\e[0m Kernel"
 else
-    echo -e "Only Use \e[33mNormal Kernel\e[0m"
+    echo -e "Only Use \e[33mNormal\e[0m Kernel"
 fi
 #############################################################
 
 
 # build image if not
 if ! docker inspect "${IMAGE_TAG}" --type=image &> /dev/null; then
-    echo -e "\e[33mIMAGE ${IMAGE_TAG} not existing, start building IMAGE ${IMAGE_TAG}...\e[0m"
+    echo -e "IMAGE \e[33m${IMAGE_TAG}\e[0m not existing, \e[33mBUILDING\e[0m IMAGE ${IMAGE_TAG}..."
     docker buildx bake -f panda-bake.hcl
-    echo -e "\e[33mImage Built Sucessfully\e[0m"
+    echo -e "Image Built \e[33mSucessfully\e[0m"
 else
-    echo -e "\e[33mIMAGE ${IMAGE_TAG} already existing...\e[0m"
+    echo -e "IMAGE \e[33m${IMAGE_TAG}\e[0m already existing..."
+    if [ "${no_cache}" = 'true' ]; then
+        echo -e "Detect \e[33mno cache\e[0m true, \e[33mREBUILDING\e[0m the image"
+        docker buildx bake -f panda-bake.hcl
+        echo -e "Image Built \e[33mSucessfully\e[0m"
+    fi
 fi
 
 # GUI applications
@@ -113,12 +118,12 @@ args+=(
 
 # Create container if not
 if [ -z "$(docker ps -a -q -f name=${CONTAINER_NAME})" ]; then
-    echo -e "\e[33mCONTAINER ${CONTAINER_NAME} not existing. Create and run the container\e[0m"
+    echo -e "CONTAINER \e[33m${CONTAINER_NAME}\e[0m not existing. \e[33mNew\e[0m is created and run"
     docker run "${args[@]}"
 else
     # Start the stopped container
     if [ -z "$(docker ps -q -f name=${CONTAINER_NAME})" ]; then
-        echo -e "\e[33mCONTAINER ${CONTAINER_NAME} existing but stopped. Start and run the container\e[0m"
+        echo -e "CONTAINER \e[33m${CONTAINER_NAME}\e[0m existing but stopped. \e[33mContinue\e[0m the stopped container"
         docker start ${CONTAINER_NAME}
         docker exec --interactive --tty \
                     --user="${USER_ID}:${GROUP_ID}" \
@@ -126,7 +131,7 @@ else
                     "${CONTAINER_NAME}" "${sh}"
     # Enter to a runnning container
     else
-        echo -e "\e[33mCONTAINER ${CONTAINER_NAME} existing and running. Enter the container with a new section\e[0m"
+        echo -e "CONTAINER \e[33m${CONTAINER_NAME}\e[0m existing and running. \e[33mEnter\e[0m the container with a new section"
         docker exec --interactive --tty \
                     --user="${USER_ID}:${GROUP_ID}" \
                     --workdir "${WORKSPACE_PATH}" \
