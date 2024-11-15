@@ -16,12 +16,25 @@ To Create an Image, Run the Container or Open another section in Container, plea
  * -n: Nocache or rebuild New image
  * -b: use Bash instead of zsh
  * -r: enable Realtime kernel
-
-### Rebuild or Build with no cache
+ 
+### Run Examples
+#### Example 1: Rebuild or Build with no cache
 If you want to rebuild the image with changed dockerfile or to build with no-cache for the latest dependencies, you could build with no cache by running the following scirpts. In this way, you could rebuild the image from scratch but spend much longer time.
 ```bash
-./enterpoint.sh -c
+./enterpoint.sh -n
 ```
+#### Example 2: Build the image with cache, enable realtime kernel, and use bash inside container
+```bash
+cd ros-docker-dev
+./enterpoint.sh -br
+```
+
+#### Example 3: Build or rebuild the image with no cache, enable realtime kernel and use zsh inside container. 
+```bash
+cd ros-docker-dev
+./enterpoint.sh -nr
+```
+
 
 ## Features:
  * Volumed: Container volumed the parent folder(../ros-docker-dev) as the workspace in container. If you don't need it, please comment in the [enterpoint.sh](./enterpoint.sh)
