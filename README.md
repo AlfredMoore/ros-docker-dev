@@ -34,7 +34,11 @@ cd ros-docker-dev
 cd ros-docker-dev
 ./enterpoint.sh -nr
 ```
-
+#### Example 4: Enter an existing container. (-n will raise unexpected error)
+```bash
+cd ros-docker-dev
+./enterpoint.sh -r
+```
 
 ## Features:
  * Volumed: Container volumed the parent folder(../ros-docker-dev) as the workspace in container. If you don't need it, please comment in the [enterpoint.sh](./enterpoint.sh)

@@ -43,9 +43,9 @@ RUN apt-get update && apt-get install --yes \
     python3-pip
 RUN pip3 install --upgrade virtualenv
 RUN add-apt-repository ppa:deadsnakes/ppa
-RUN apt-get update && apt-get install --yes \
-    python3.9 python3.9-dev python3.9-distutils python3.9-venv \
-    python3.10 python3.10-dev python3.10-distutils python3.10-venv
+# RUN apt-get update && apt-get install --yes \
+#     python3.9 python3.9-dev python3.9-distutils python3.9-venv \
+#     python3.10 python3.10-dev python3.10-distutils python3.10-venv
 ### End ##############################################################
 ######################################################################
 
