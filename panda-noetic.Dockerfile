@@ -43,9 +43,9 @@ RUN apt-get update && apt-get install --yes \
     python3-pip
 RUN pip3 install --upgrade virtualenv
 RUN add-apt-repository ppa:deadsnakes/ppa
-RUN apt-get update && apt-get install --yes \
-    python3.9 python3.9-dev python3.9-distutils python3.9-venv \
-    python3.10 python3.10-dev python3.10-distutils python3.10-venv
+# RUN apt-get update && apt-get install --yes \
+#     python3.9 python3.9-dev python3.9-distutils python3.9-venv \
+#     python3.10 python3.10-dev python3.10-distutils python3.10-venv
 ### End ##############################################################
 ######################################################################
 
@@ -77,8 +77,8 @@ USER ${USERNAME}
 # SSH forward is only valid to root, so we should specify it owned by uid
 RUN mkdir -p -m 0700 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
 # It is better to volume current repo instead of clone an another one in container
-RUN --mount=type=ssh,uid=${USER_ID} \
-    git clone git@github.com:AlfredMoore/HANDREC_Panda.git --recursive
+# RUN --mount=type=ssh,uid=${USER_ID} \
+#     git clone git@github.com:AlfredMoore/HANDREC_Panda.git --recursive
 ### End ##############################################################
 ######################################################################
 
@@ -105,6 +105,11 @@ RUN pip3 install \
 USER ${USERNAME}
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 ENV PATH="/home/${USERNAME}/.cargo/bin:${PATH}"
+
+# Realtime kernel
+USER root
+RUN addgroup realtime
+RUN usermod -a -G realtime ${USERNAME}
 ### End ##############################################################
 ######################################################################
 
