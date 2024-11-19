@@ -27,6 +27,19 @@ else
     export NOCACHE=false
 fi
 
+if [ "${use_realtime}" = 'true' ]; then
+    echo -e "Enable \e[33mRealtime\e[0m Kernel"
+    use_bash='true'
+    echo "Realtime program only supports bash and root user now."
+    export HOME_PATH="/root"
+    export WORKSPACE_PATH="/root/workspace"
+    echo "Override HOME_PATH=${HOME_PATH}, WORKSPACE_PATH=${WORKSPACE_PATH}"
+    user="root"
+else
+    user="${USER_ID}:${GROUP_ID}"
+    echo -e "Only Use \e[33mNormal\e[0m Kernel"
+fi
+
 if [ "${use_bash}" = 'true' ]; then
     echo -e "Use \e[33mbash\e[0m as the shell"
     sh="/bin/bash"
@@ -35,11 +48,6 @@ else
     sh="/bin/zsh"
 fi
 
-if [ "${use_realtime}" = 'true' ]; then
-    echo -e "Enable \e[33mRealtime\e[0m Kernel"
-else
-    echo -e "Only Use \e[33mNormal\e[0m Kernel"
-fi
 #############################################################
 
 
@@ -83,7 +91,7 @@ args=(
 
     # User spoofing
     --group-add="sudo"
-    --user="${USER_ID}:${GROUP_ID}"      # Align with Dockerfile
+    --user="${user}"      # Align with Dockerfile
     --volume="/etc/group:/etc/group:ro"
     --volume="/etc/passwd:/etc/passwd:ro"
     --volume="/etc/shadow:/etc/shadow:ro"
@@ -112,6 +120,7 @@ fi
 
 args+=(
     # start image
+    --env "SHELL=${sh}"
     "${IMAGE_TAG}"
     "${sh}"
 )
@@ -126,14 +135,14 @@ else
         echo -e "CONTAINER \e[33m${CONTAINER_NAME}\e[0m existing but stopped. \e[33mContinue\e[0m the stopped container"
         docker start ${CONTAINER_NAME}
         docker exec --interactive --tty \
-                    --user="${USER_ID}:${GROUP_ID}" \
+                    --user="${user}" \
                     --workdir "${WORKSPACE_PATH}"  \
                     "${CONTAINER_NAME}" "${sh}"
     # Enter to a runnning container
     else
         echo -e "CONTAINER \e[33m${CONTAINER_NAME}\e[0m existing and running. \e[33mEnter\e[0m the container with a new section"
         docker exec --interactive --tty \
-                    --user="${USER_ID}:${GROUP_ID}" \
+                    --user="${user}" \
                     --workdir "${WORKSPACE_PATH}" \
                     "${CONTAINER_NAME}" "${sh}"
     fi
