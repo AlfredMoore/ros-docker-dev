@@ -3,18 +3,20 @@
 set -o errexit
 set -o nounset
 
-source ./env.sh
-
 # Parse flags
 no_cache='false'
 use_bash='false'
 use_realtime='false'
+humble='false'
+parent='false'
 
-while getopts 'nbr' flag; do
+while getopts 'nbrhp' flag; do
   case "${flag}" in
     n) no_cache='true' ;;
     b) use_bash='true' ;;
     r) use_realtime='true' ;;
+    h) humble='true' ;;
+    p) parent='true' ;;
     *) error "Unexpected option ${flag}" ;;
   esac
 done
@@ -25,6 +27,28 @@ if [ "${no_cache}" = 'true' ]; then
 else
     echo -e "Use \e[33mcache\e[0m to build or rebuild the image"
     export NOCACHE=false
+fi
+
+if [ "${parent}" = 'true' ]; then
+    export PARENT_REPO="true"
+    echo -e "Use \e[33mparent\e[0m repo label"
+else
+    export PARENT_REPO="false"
+    echo -e "Use \e[33current\e[0m repo label"
+fi
+
+source ./env.sh
+
+if [ "${humble}" = 'true' ]; then
+    bake_target="stretch-humble"
+    echo -e "ROS \e[33mHumble\e[0m with ${bake_target}"
+    export IMAGE_TAG="fluent/stretch-ros:${GIT_LABEL}"
+    export CONTAINER_NAME="ros-stretch-humble"
+else
+    bake_target="panda-noetic"
+    echo -e "ROS \e[33mNoetic\e[0m with ${bake_target}"
+    export IMAGE_TAG="WiscHCI/panda-ros:${GIT_LABEL}"
+    export CONTAINER_NAME="ros-panda-noetic"
 fi
 
 if [ "${use_realtime}" = 'true' ]; then
@@ -54,14 +78,14 @@ fi
 # build image if not
 if ! docker inspect "${IMAGE_TAG}" --type=image &> /dev/null; then
     echo -e "IMAGE \e[33m${IMAGE_TAG}\e[0m not existing, \e[33mBUILDING\e[0m IMAGE ${IMAGE_TAG}..."
-    docker buildx bake -f panda-bake.hcl
-    echo -e "Image Built \e[33mSucessfully\e[0m"
+    docker buildx bake -f ros-bake.hcl ${bake_target}
+    echo -e "Target ${bake_target} Image Built \e[33mSucessfully\e[0m"
 else
-    echo -e "IMAGE \e[33m${IMAGE_TAG}\e[0m already existing..."
+    echo -e "Target ${bake_target} IMAGE \e[33m${IMAGE_TAG}\e[0m already existing..."
     if [ "${no_cache}" = 'true' ]; then
-        echo -e "Detect \e[33mno cache\e[0m true, \e[33mREBUILDING\e[0m the image"
-        docker buildx bake -f panda-bake.hcl
-        echo -e "Image Built \e[33mSucessfully\e[0m"
+        echo -e "Detect \e[33mno cache\e[0m true, \e[33mREBUILDING\e[0m the image ${IMAGE_TAG}..."
+        docker buildx bake -f panda-bake.hcl ${bake_target}
+        echo -e "Target ${bake_target} Image Built \e[33mSucessfully\e[0m"
     fi
 fi
 

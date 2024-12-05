@@ -1,15 +1,20 @@
 #! /usr/bin/env bash
 
 # Create a label from git branch or commit hash of the parent directory or latest
-GIT_LABEL="$(git -C .. branch --show-current | tr / -)"
+if [ "${PARENT_REPO}" = 'true' ]; then
+    GIT_LABEL="$(git -C .. branch --show-current | tr / -)"
+else
+    GIT_LABEL="$(git branch --show-current | tr / -)"
+fi
 if [[ -z "$GIT_LABEL" ]]; then
     GIT_LABEL="$(git -C .. rev-parse --short HEAD)"
     if [[ -z "$GIT_LABEL" ]]; then
         GIT_LABEL="latest"
     fi
 fi
+export GIT_LABEL=${GIT_LABEL}
 
-# Image Tag and Container Name
+# Image Tag and Container Name (override in enterpoint.sh)
 export IMAGE_TAG="WiscHCI/panda-ros:${GIT_LABEL}"
 export CONTAINER_NAME="ros-panda-noetic"
 

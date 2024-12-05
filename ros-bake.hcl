@@ -27,3 +27,16 @@ target "panda-noetic" {
   no-cache = "${NOCACHE}"    # set false in Development, true in Deployment
   ssh = ["default"]
 }
+
+target "stretch-humble" {
+  context = "."
+  dockerfile = "stretch-humble.Dockerfile"
+  args = {
+    USERNAME = "${USERNAME}"
+    USER_ID = "${USER_ID}"
+    GROUP_ID = "${GROUP_ID}"
+  }
+  tags = ["${IMAGE_TAG}"]
+  no-cache = "${NOCACHE}"    # set false in Development, true in Deployment
+  ssh = ["default"]
+}
