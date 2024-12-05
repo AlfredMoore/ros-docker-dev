@@ -9,6 +9,7 @@ variable "USERNAME" { default = "panda" }
 variable "USER_ID" { default = "1000" }
 variable "GROUP_ID" { default = "1000" }
 variable "NOCACHE" { default = false }
+variable "SHELL" { default = "/bin/zsh" }
 
 #############################################################
 

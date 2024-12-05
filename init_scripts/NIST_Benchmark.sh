@@ -1,5 +1,7 @@
 #! /usr/bin/env bash
 
+cd ${WORKSPACE_PATH}
+
 sudo rosdep update
 sudo rosdep install --from-paths src --ignore-src --rosdistro noetic  -y --skip-keys libfranka
 

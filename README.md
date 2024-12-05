@@ -16,6 +16,7 @@ To Create an Image, Run the Container or Open another section in Container, plea
  * -n: Nocache or rebuild New image
  * -b: use Bash instead of zsh
  * -r: enable Realtime kernel
+:warning: -r realtime mode uses root user and -b bash mandatorily
  
 ### Run Examples
 #### Example 1: Rebuild or Build with no cache
