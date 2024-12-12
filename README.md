@@ -16,6 +16,8 @@ To Create an Image, Run the Container or Open another section in Container, plea
  * -n: Nocache or rebuild New image
  * -b: use Bash instead of zsh
  * -r: enable Realtime kernel
+ * -h: install ROS-Humble instead of ROS-Noetic
+ * -p: tag image with parent repository information
 :warning: -r realtime mode uses root user and -b bash mandatorily
  
 ### Run Examples
