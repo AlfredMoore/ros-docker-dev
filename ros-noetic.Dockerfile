@@ -1,40 +1,35 @@
 FROM osrf/ros:noetic-desktop-full
 
 ######################################################################
-### ARG and ENV Passing ##############################################
-######################################################################
-ARG USERNAME=ros
-ARG USER_ID=1000
-ARG GROUP_ID=1000
-
-ENV TZ=America/Chicago
-ENV DISPLAY=":0"
-### End ##############################################################
-######################################################################
-
-
-
-######################################################################
 ### Ubuntu Essentials ################################################
 ######################################################################
 # Development Tools
 RUN apt update && apt install --yes \
+    # Programming
     build-essential gcc g++ gdb cmake \
+    software-properties-common \
+    # Editor
     nano vim \
+    # Repository
     git
 
 # Productivity Tools.
 RUN apt update && apt install --yes \
+    # Network
     iproute2 iputils-ping net-tools openssh-client\
+    # Download
     curl wget \
+    # Compression
     unzip zip \
-    usbutils \
+    # USB
+    usbutils libusb-dev libudev-dev udev\
+    # Graphics
     mesa-utils \
-    tmux \
-    zsh
+    # Terminal
+    tmux zsh
 
 # Python Tools
-RUN add-apt-repository ppa:deadsnakes/ppa
+# RUN add-apt-repository ppa:deadsnakes/ppa
 
 RUN apt-get update && apt-get install --yes \
     python-is-python3 \

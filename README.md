@@ -36,7 +36,7 @@ Here is env variables in the `env.sh`. Define those in the `env.sh` or your env 
 ### Enter container without scripts
 Build Image: 
 ```bash
-docker build --tag <image tag> --file <dockerfile> --no-cache .
+docker build --tag <image tag> --file <dockerfile> --no-cache .     # --no-cache means install dependencies with no cache
 ```
 
 Run Container:

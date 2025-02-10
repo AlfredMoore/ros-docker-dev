@@ -1,42 +1,35 @@
 FROM osrf/ros:humble-desktop-full
 
 ######################################################################
-### ARG and ENV Passing ##############################################
-######################################################################
-ARG USERNAME=ros
-ARG USER_ID=1000
-ARG GROUP_ID=1000
-
-ENV TZ=America/Chicago
-ENV DISPLAY=":0"
-### End ##############################################################
-######################################################################
-
-
-
-######################################################################
 ### Ubuntu Essentials ################################################
 ######################################################################
 # Development Tools
 RUN apt update && apt install --yes \
+    # Programming
     build-essential gcc g++ gdb cmake \
-    clang-12 clang-format-12 \
     software-properties-common \
+    # Editor
     nano vim \
-    valgrind \
+    # Repository
     git
 
 # Productivity Tools.
 RUN apt update && apt install --yes \
+    # Network
     iproute2 iputils-ping net-tools openssh-client\
+    # Download
     curl wget \
+    # Compression
     unzip zip \
-    usbutils mesa-utils \
-    tmux \
-    zsh
+    # USB
+    usbutils libusb-dev libudev-dev udev\
+    # Graphics
+    mesa-utils \
+    # Terminal
+    tmux zsh
 
 # Python Tools
-RUN add-apt-repository ppa:deadsnakes/ppa
+# RUN add-apt-repository ppa:deadsnakes/ppa
 
 RUN apt-get update && apt-get install --yes \
     python-is-python3 \
