@@ -12,70 +12,39 @@ To Create an Image, Run the Container or Open another section in Container, plea
 ```bash
 ./enterpoint.sh
 ```
-### Options
- * -n: Nocache or rebuild New image
- * -b: use Bash instead of zsh
- * -r: enable Realtime kernel
- * -h: install ROS-Humble instead of ROS-Noetic
- * -p: tag image with parent repository information
-:warning: -r realtime mode uses root user and -b bash mandatorily
- 
-### Run Examples
-#### Example 1: Rebuild or Build with no cache
-If you want to rebuild the image with changed dockerfile or to build with no-cache for the latest dependencies, you could build with no cache by running the following scirpts. In this way, you could rebuild the image from scratch but spend much longer time.
+
+## How to use
+This is the cleaned up version. All Options should be defined in config file `env.sh` and `enterpoint.sh` as Environment Variables or by using `export <VAR>=...`.
+
+Env override options:
+ * ROS_DISTRO: ROS distribution
+ * VOLUME_DIR: you can volume a folder
+
+### Enter container with scripts
+In the repository folder, run
 ```bash
-./enterpoint.sh -n
-```
-#### Example 2: Build the image with cache, enable realtime kernel, and use bash inside container
-```bash
-cd ros-docker-dev
-./enterpoint.sh -br
+./enterpoint.sh
 ```
 
-#### Example 3: Build or rebuild the image with no cache, enable realtime kernel and use zsh inside container. 
+Here is env variables in the `env.sh`. Define those in the `env.sh` or your env variable will be override by the `env.sh`.
+ * GIT_LABEL
+ * IMAGE_TAG
+ * CONTAINER_NAME
+ * HOME_PATH
+ * WORKSPACE_PATH
+
+### Enter container without scripts
+Build Image: 
 ```bash
-cd ros-docker-dev
-./enterpoint.sh -nr
+docker build --tag <image tag> --file <dockerfile> --no-cache .
 ```
-#### Example 4: Enter an existing container. (-n will raise unexpected error)
+
+Run Container:
 ```bash
-cd ros-docker-dev
-./enterpoint.sh -r
+docker run --rm -it --name=<CONTAINER_NAME> --network=<net> --privileged --volume="<host path>:<path>" --device=="<host path>:<path>" --env="<var=host var>"
 ```
 
-## Features:
- * Volumed: Container volumed the parent folder(../ros-docker-dev) as the workspace in container. If you don't need it, please comment in the [enterpoint.sh](./enterpoint.sh)
- ```bash
- --volume="$(dirname ${ENTERPOINT_DIR}):${WORKSPACE_PATH}"   # Volume the parent of this docker repo to workspace
- ``` 
- * User spoofing: Container has the same username and password as the host.
- * SSH forwarding: Container fetches the same ssh agent as the host (if you have set the ssh-agent in host). No need to add any additional SSH key pair. In the container you could directly use `git` via SSH.
-
- ## Notes:
- * Oh-my-zsh: Container has an configured oh-my-zsh. It is editable in the [configs/oh-my-zsh.zshrc](./configs/oh-my-zsh.zshrc).
- * Editable and Readable: [Dockerfile](./panda-noetic.Dockerfile), [Building Config](./panda-bake.hcl) and [Running Config](./enterpoint.sh). You can also build from the [raw dockerfile](./raw.Dockerfile).
-
-## Contribution
-### [NIST_Benchmark](https://github.com/Wisc-HCI/NIST_Benchmark)
-:warning: **Note: In the container, you can use zsh intead of bash. `zsh` is pretty and more powerful with oh-my-zsh theme and auto-completion. But remember to `source /devel/setup.zsh` instead of `.bash`**
-
- * Some computers support directly `sudo apt install libfranka`, but some do not. So uncomment `RUN apt-get ...` in [panda-noetic.Dockerfile](./panda-noetic.Dockerfile) if it is possible, or you should build from source following [this](https://frankaemika.github.io/docs/installation_linux.html#building-from-source).
-   ```Dockerfile
-   # Install libfranka and franka-ros
-   USER root
-   ## Uncomment the following lines if you can apt install libfranka
-   RUN apt-get update && apt-get install --yes \
-       ros-noetic-libfranka ros-noetic-franka-ros
-   ```
- * Change your docker image name and container name in [env.sh](./env.sh)
-   ```bash
-   # Image Tag and Container Name
-   export IMAGE_TAG="WiscHCI/panda-ros:${GIT_LABEL}"
-   export CONTAINER_NAME="ros-panda-noetic"
-   ```
-
-## e.g.
-![container example](./example.jpg)
-
-## TODO ~~(TBD: lazy man)~~
-Update to docker compose run and build (docker compose documents are unclear).
+Execute cmd:
+```bash
+docker build -it <CONTAINER_NAME> <CMD/SHELL>
+```
