@@ -1,9 +1,9 @@
-FROM osrf/ros:noetic-desktop-full
+FROM osrf/ros:humble-desktop-full
 
 ######################################################################
 ### ARG and ENV Passing ##############################################
 ######################################################################
-ARG USERNAME=panda
+ARG USERNAME=ros
 ARG USER_ID=1000
 ARG GROUP_ID=1000
 
@@ -36,35 +36,36 @@ RUN apt update && apt install --yes \
     zsh
 
 # Python Tools
+RUN add-apt-repository ppa:deadsnakes/ppa
+
 RUN apt-get update && apt-get install --yes \
     python-is-python3 \
-    python3-catkin-tools \
+    python3-colcon-common-extensions \
     python3-pip
-RUN pip3 install --upgrade virtualenv
-RUN add-apt-repository ppa:deadsnakes/ppa
-RUN apt-get update && apt-get install --yes \
-    python3.9 python3.9-dev python3.9-distutils python3.9-venv \
-    python3.10 python3.10-dev python3.10-distutils python3.10-venv
+# RUN pip3 install --upgrade virtualenv
+# RUN apt-get update && apt-get install --yes \
+#     python3.9 python3.9-dev python3.9-distutils python3.9-venv \
+#     python3.10 python3.10-dev python3.10-distutils python3.10-venv
 ### End ##############################################################
 ######################################################################
 
 
 
-######################################################################
-### User Spoofing ####################################################
-######################################################################
-# Create User and Group with passed ARG in .hcl file
-RUN groupadd -g ${GROUP_ID} ${USERNAME} && \
-    useradd -u ${USER_ID} -g ${GROUP_ID} \
-        --create-home \
-        --shell /bin/bash \
-        ${USERNAME}
+# ######################################################################
+# ### User Spoofing ####################################################
+# ######################################################################
+# # Create User and Group with passed ARG in .hcl file
+# RUN groupadd -g ${GROUP_ID} ${USERNAME} && \
+#     useradd -u ${USER_ID} -g ${GROUP_ID} \
+#         --create-home \
+#         --shell /bin/bash \
+#         ${USERNAME}
 
-# Setup HOME dir
-ENV HOME=/home/${USERNAME}
-WORKDIR ${HOME}
-### End ##############################################################
-######################################################################
+# # Setup HOME dir
+# ENV HOME=/home/${USERNAME}
+# WORKDIR ${HOME}
+# ### End ##############################################################
+# ######################################################################
 
 # Editable from now
 # ######################################################################
