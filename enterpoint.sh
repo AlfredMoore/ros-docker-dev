@@ -76,7 +76,7 @@ args+=(
 
 # Create container if not
 if [ -z "$(docker ps -a -q -f name=${CONTAINER_NAME})" ]; then
-    echo "CONTAINER \e[33m${CONTAINER_NAME}\e[0m not existing, creating"
+    echo "CONTAINER ${CONTAINER_NAME} not existing, creating..."
     docker run "${args[@]}"
 else
     echo "CONTAINER ${CONTAINER_NAME} existing and running, entering..."
