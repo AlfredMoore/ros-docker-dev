@@ -17,8 +17,14 @@ To Create an Image, Run the Container or Open another section in Container, plea
 This is the cleaned up version. All Options should be defined in config file `env.sh` and `enterpoint.sh` as Environment Variables or by using `export <VAR>=...`.
 
 Env override options:
- * ROS_DISTRO: ROS distribution
+ * ROS_DISTRO: ROS distribution. 
+ ```bash
+ export ROS_DISTRO=humble   # export ROS_DISTRO=noetic
+ ```
  * VOLUME_DIR: you can volume a folder
+ ```bash
+ export VOLUME_DIR=<path>   # export VOLUME_DIR=$(pwd)
+ ```
 
 ### Enter container with scripts
 In the repository folder, run
@@ -47,4 +53,12 @@ docker run --rm -it --name=<CONTAINER_NAME> --network=<net> --privileged --volum
 Execute cmd:
 ```bash
 docker build -it <CONTAINER_NAME> <CMD/SHELL>
+```
+
+## In ROS Humble
+Source environment. These lines can be added to `~/.bashrc` or `~/.zshrc` for convenience.
+```bash
+source /opt/ros/humble/setup.bash
+source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash
+source install/setup.bash   # source <workspace>/install/setup.bash
 ```
