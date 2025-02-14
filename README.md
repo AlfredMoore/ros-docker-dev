@@ -19,11 +19,11 @@ This is the cleaned up version. All Options should be defined in config file `en
 Env override options:
  * ROS_DISTRO: ROS distribution. 
  ```bash
- export ROS_DISTRO=humble   # export ROS_DISTRO=noetic
+ export ROS_DISTRO=humble   # or export ROS_DISTRO=noetic
  ```
  * VOLUME_DIR: you can volume a folder
  ```bash
- export VOLUME_DIR=<path>   # export VOLUME_DIR=$(pwd)
+ export VOLUME_DIR=<path>   # or export VOLUME_DIR=$(pwd)
  ```
 
 ### Enter container with scripts
@@ -53,6 +53,12 @@ docker run --rm -it --name=<CONTAINER_NAME> --network=<net> --privileged --volum
 Execute cmd:
 ```bash
 docker build -it <CONTAINER_NAME> <CMD/SHELL>
+```
+
+Rebuild Image:
+```bash
+source env.sh
+docker build --tag "${IMAGE_TAG}" --file "ros-${ROS_DISTRO}.Dockerfile" --no-cache .
 ```
 
 ## In ROS Humble

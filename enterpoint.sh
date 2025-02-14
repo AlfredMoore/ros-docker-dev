@@ -53,6 +53,7 @@ args=(
 
 # default VOLUME_DIR
 if [[ -n "${VOLUME_DIR:-}" ]]; then
+    echo "Volume ${VOLUME_DIR}"
     args+=(
         # Workspace
         --volume="${VOLUME_DIR}:${WORKSPACE_PATH}"
