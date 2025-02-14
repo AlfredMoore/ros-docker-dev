@@ -46,7 +46,8 @@ RUN apt-get update && apt-get install --yes \
 ### ROS ##############################################################
 ######################################################################
 # Dependencies
-RUN apt install ros-humble-joint-state-publisher-gui
+# RUN apt install --yes \
+    # ros-humble-joint-state-publisher-gui  # invalid somehow
 
 # Environment
 RUN echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
