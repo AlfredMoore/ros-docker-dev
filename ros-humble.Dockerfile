@@ -45,10 +45,14 @@ RUN apt-get update && apt-get install --yes \
 ######################################################################
 ### ROS ##############################################################
 ######################################################################
+# Dependencies
+RUN apt install ros-humble-joint-state-publisher-gui
 
+# Environment
 RUN echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
 # RUN echo "export ROS_DOMAIN_ID=<your_domain_id>" >> ~/.bashrc # Default: 0
 # RUN echo "export ROS_LOCALHOST_ONLY=1" >> ~/.bashrc # Default: 0
+RUN echo "source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash" >> ~/.bashrc
 
 ### End ##############################################################
 ######################################################################
