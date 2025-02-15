@@ -36,8 +36,8 @@ args=(
     --network=host
 
     # # hostname and localhost
-    # --hostname="${CONTAINER_NAME}"
-    # --add-host="${CONTAINER_NAME}":"127.0.0.1"        # Add localhost address manually
+    --hostname="${CONTAINER_NAME}"
+    --add-host="${CONTAINER_NAME}":"127.0.0.1"        # Add localhost address manually
 
     # GUI applications
     --ipc=host
@@ -46,14 +46,14 @@ args=(
 
     --privileged
 
-    # Access all devices
+    # Access devices
     --device="/dev:/dev"
     --env="DISPLAY=$DISPLAY"
 )
 
 # default VOLUME_DIR
 if [[ -n "${VOLUME_DIR:-}" ]]; then
-    echo "Volume"
+    echo "Volume ${VOLUME_DIR}"
     args+=(
         # Workspace
         --volume="${VOLUME_DIR}:${WORKSPACE_PATH}"
@@ -76,7 +76,7 @@ args+=(
 
 # Create container if not
 if [ -z "$(docker ps -a -q -f name=${CONTAINER_NAME})" ]; then
-    echo "CONTAINER \e[33m${CONTAINER_NAME}\e[0m not existing, creating"
+    echo "CONTAINER ${CONTAINER_NAME} not existing, creating..."
     docker run "${args[@]}"
 else
     echo "CONTAINER ${CONTAINER_NAME} existing and running, entering..."

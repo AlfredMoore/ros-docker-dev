@@ -17,8 +17,14 @@ To Create an Image, Run the Container or Open another section in Container, plea
 This is the cleaned up version. All Options should be defined in config file `env.sh` and `enterpoint.sh` as Environment Variables or by using `export <VAR>=...`.
 
 Env override options:
- * ROS_DISTRO: ROS distribution
+ * ROS_DISTRO: ROS distribution. 
+ ```bash
+ export ROS_DISTRO=humble   # or export ROS_DISTRO=noetic
+ ```
  * VOLUME_DIR: you can volume a folder
+ ```bash
+ export VOLUME_DIR=<path>   # or export VOLUME_DIR=$(pwd)
+ ```
 
 ### Enter container with scripts
 In the repository folder, run
@@ -36,7 +42,7 @@ Here is env variables in the `env.sh`. Define those in the `env.sh` or your env 
 ### Enter container without scripts
 Build Image: 
 ```bash
-docker build --tag <image tag> --file <dockerfile> --no-cache .
+docker build --tag <image tag> --file <dockerfile> --no-cache .     # --no-cache means install dependencies with no cache
 ```
 
 Run Container:
@@ -47,4 +53,18 @@ docker run --rm -it --name=<CONTAINER_NAME> --network=<net> --privileged --volum
 Execute cmd:
 ```bash
 docker build -it <CONTAINER_NAME> <CMD/SHELL>
+```
+
+Rebuild Image:
+```bash
+source env.sh
+docker build --tag "${IMAGE_TAG}" --file "ros-${ROS_DISTRO}.Dockerfile" --no-cache .
+```
+
+## In ROS Humble
+Source environment. These lines can be added to `~/.bashrc` or `~/.zshrc` for convenience.
+```bash
+source /opt/ros/humble/setup.bash
+source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash
+source install/setup.bash   # source <workspace>/install/setup.bash
 ```

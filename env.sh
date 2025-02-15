@@ -10,12 +10,12 @@ if [[ -z "$GIT_LABEL" ]]; then
 fi
 export GIT_LABEL=${GIT_LABEL}
 
-# Image Tag and Container Name (override in enterpoint.sh)
-export IMAGE_TAG="AM/ros:${GIT_LABEL}"
-export CONTAINER_NAME="roscontainer"
-
 # default ROS distro
 export ROS_DISTRO="${ROS_DISTRO:-humble}"
+
+# Image Tag and Container Name (override in enterpoint.sh)
+export IMAGE_TAG="AM/ros-${ROS_DISTRO}:${GIT_LABEL}"
+export CONTAINER_NAME="${ROS_DISTRO}-container"
 
 # Volume Settings
 # ENTERPOINT_DIR="$(dirname $(realpath "$0"))"    # Get enterpoints's absolute directory path

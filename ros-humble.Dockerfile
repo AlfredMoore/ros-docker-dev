@@ -1,42 +1,35 @@
 FROM osrf/ros:humble-desktop-full
 
 ######################################################################
-### ARG and ENV Passing ##############################################
-######################################################################
-ARG USERNAME=ros
-ARG USER_ID=1000
-ARG GROUP_ID=1000
-
-ENV TZ=America/Chicago
-ENV DISPLAY=":0"
-### End ##############################################################
-######################################################################
-
-
-
-######################################################################
 ### Ubuntu Essentials ################################################
 ######################################################################
 # Development Tools
 RUN apt update && apt install --yes \
+    # Programming
     build-essential gcc g++ gdb cmake \
-    clang-12 clang-format-12 \
     software-properties-common \
+    # Editor
     nano vim \
-    valgrind \
+    # Repository
     git
 
 # Productivity Tools.
 RUN apt update && apt install --yes \
+    # Network
     iproute2 iputils-ping net-tools openssh-client\
+    # Download
     curl wget \
+    # Compression
     unzip zip \
-    usbutils mesa-utils \
-    tmux \
-    zsh
+    # USB
+    usbutils libusb-dev libudev-dev udev\
+    # Graphics
+    mesa-utils \
+    # Terminal
+    tmux zsh
 
 # Python Tools
-RUN add-apt-repository ppa:deadsnakes/ppa
+# RUN add-apt-repository ppa:deadsnakes/ppa
 
 RUN apt-get update && apt-get install --yes \
     python-is-python3 \
@@ -49,6 +42,21 @@ RUN apt-get update && apt-get install --yes \
 ### End ##############################################################
 ######################################################################
 
+######################################################################
+### ROS ##############################################################
+######################################################################
+# Dependencies
+# RUN apt install --yes \
+    # ros-humble-joint-state-publisher-gui  # invalid somehow
+
+# Environment
+RUN echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
+# RUN echo "export ROS_DOMAIN_ID=<your_domain_id>" >> ~/.bashrc # Default: 0
+# RUN echo "export ROS_LOCALHOST_ONLY=1" >> ~/.bashrc # Default: 0
+RUN echo "source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash" >> ~/.bashrc
+
+### End ##############################################################
+######################################################################
 
 
 # ######################################################################
