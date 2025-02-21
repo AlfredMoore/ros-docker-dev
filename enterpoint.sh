@@ -10,13 +10,13 @@ source ./env.sh
 
 # BUILD IMAGE
 if ! docker inspect "${IMAGE_TAG}" --type=image &> /dev/null; then
-    echo "IMAGE ${IMAGE_TAG} not existing, BUILDING new image..."
+    echo "IMAGE ${IMAGE_TAG} not existing, BUILDING new image...\n"
     docker build \
         --tag "$IMAGE_TAG" \
         --file "ros-${ROS_DISTRO}.Dockerfile" \
         .
 else
-    echo "IMAGE ${IMAGE_TAG} already existing, if you want to build with newest dependecies, please manually build with no cache option"
+    echo "IMAGE ${IMAGE_TAG} already existing, if you want to build with newest dependecies, please manually build with no cache option\n"
 fi
 
 # GUI applications
@@ -49,6 +49,9 @@ args=(
     # Access devices
     --device="/dev:/dev"
     --env="DISPLAY=$DISPLAY"
+
+    # user
+    --user $(id -u):$(id -g)
 )
 
 # default VOLUME_DIR
@@ -62,6 +65,14 @@ if [[ -n "${VOLUME_DIR:-}" ]]; then
     )
 fi
 
+# using CUDA
+if [[ -n "${CUDA:-}" ]]; then
+    echo "Using CUDA"
+    args+=(
+        --runtime=nvidia 
+        --gpus all
+    )
+fi
 # args+=(
 #     # Realtime Kernel, if you are in RTkernel, uncomment the followings
 #     --cap-add=SYS_NICE
@@ -76,9 +87,9 @@ args+=(
 
 # Create container if not
 if [ -z "$(docker ps -a -q -f name=${CONTAINER_NAME})" ]; then
-    echo "CONTAINER ${CONTAINER_NAME} not existing, creating..."
+    echo "\nCONTAINER ${CONTAINER_NAME} not existing, creating..."
     docker run "${args[@]}"
 else
-    echo "CONTAINER ${CONTAINER_NAME} existing and running, entering..."
-    docker exec --interactive --tty "${CONTAINER_NAME}" bash
+    echo "\nCONTAINER ${CONTAINER_NAME} existing and running, entering..."
+    docker exec --interactive --tty "${CONTAINER_NAME}" --user $(id -u):$(id -g) bash
 fi

@@ -25,6 +25,12 @@ Env override options:
  ```bash
  export VOLUME_DIR=<path>   # or export VOLUME_DIR=$(pwd)
  ```
+ * CUDA: Follow these links to use Nvidia Cuda in container and solve potential problems.
+    * [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html)
+    * [Error: Failed to initialize NVML: Unknown Error](https://bobcares.com/blog/docker-failed-to-initialize-nvml-unknown-error/)
+ ```bash
+ export CUDA=1              # or unset CUDA
+ ```
 
 ### Enter container with scripts
 In the repository folder, run
@@ -62,7 +68,8 @@ docker build --tag "${IMAGE_TAG}" --file "ros-${ROS_DISTRO}.Dockerfile" --no-cac
 ```
 
 ## In ROS Humble
-Source environment. These lines can be added to `~/.bashrc` or `~/.zshrc` for convenience.
+~~Source environment. These lines can be added to `~/.bashrc` or `~/.zshrc` for convenience.~~
+The following commands have been added to humble dockerfile.
 ```bash
 source /opt/ros/humble/setup.bash
 source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash
