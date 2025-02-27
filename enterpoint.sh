@@ -10,13 +10,13 @@ source ./env.sh
 
 # BUILD IMAGE
 if ! docker inspect "${IMAGE_TAG}" --type=image &> /dev/null; then
-    echo "IMAGE ${IMAGE_TAG} not existing, BUILDING new image...\n"
+    echo "IMAGE ${IMAGE_TAG} not existing, BUILDING new image..."
     docker build \
         --tag "$IMAGE_TAG" \
         --file "ros-${ROS_DISTRO}.Dockerfile" \
         .
 else
-    echo "IMAGE ${IMAGE_TAG} already existing, if you want to build with newest dependecies, please manually build with no cache option\n"
+    echo "IMAGE ${IMAGE_TAG} already existing, if you want to build with newest dependecies, please manually build with no cache option"
 fi
 
 # GUI applications
@@ -51,7 +51,7 @@ args=(
     --env="DISPLAY=$DISPLAY"
 
     # user
-    --user $(id -u):$(id -g)
+    # --user $(id -u):$(id -g)
 )
 
 # default VOLUME_DIR
@@ -87,9 +87,9 @@ args+=(
 
 # Create container if not
 if [ -z "$(docker ps -a -q -f name=${CONTAINER_NAME})" ]; then
-    echo "\nCONTAINER ${CONTAINER_NAME} not existing, creating..."
+    echo "CONTAINER ${CONTAINER_NAME} not existing, creating..."
     docker run "${args[@]}"
 else
-    echo "\nCONTAINER ${CONTAINER_NAME} existing and running, entering..."
-    docker exec --interactive --tty "${CONTAINER_NAME}" --user $(id -u):$(id -g) bash
+    echo "CONTAINER ${CONTAINER_NAME} existing and running, entering..."
+    docker exec --interactive --tty "${CONTAINER_NAME}" bash
 fi
