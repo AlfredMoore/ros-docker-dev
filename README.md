@@ -10,13 +10,13 @@ You should firstly install [Docker Engine](https://docs.docker.com/engine/instal
 ## How to use ( two methods )
 This is the cleaned up version. All Options should be defined in config file `env.sh` and `enterpoint.sh` as Environment Variables or by using `export <VAR>=...`.
 
-### Required
+### Running Options
 Env override options:
- * ROS_DISTRO: ROS distribution. 
+ * ROS_DISTRO: choose ROS distribution. 
  ```bash
  export ROS_DISTRO=humble   # or export ROS_DISTRO=noetic
  ```
- * VOLUME_DIR: you can volume a folder
+ * VOLUME_DIR: volume a folder into container dir `/workspace`.
  ```bash
  export VOLUME_DIR=<path>   # or export VOLUME_DIR=$(pwd)
  ```
@@ -27,7 +27,7 @@ Env override options:
  export CUDA=1              # or unset CUDA
  ```
 
-### Method 1: Enter container with scripts
+### Method 1: Enter Container with Scripts
 In the repository folder, run
 ```bash
 ./enterpoint.sh
@@ -40,7 +40,7 @@ Here is env variables in the `env.sh`. Define those in the `env.sh` or your env 
  * HOME_PATH
  * WORKSPACE_PATH
 
-### Method 2: Enter container without scripts
+### Method 2: Enter Container without CLI
 Build Image: 
 ```bash
 docker build --tag <image tag> --file <dockerfile> --no-cache .     # --no-cache means install dependencies with no cache
@@ -56,7 +56,7 @@ Execute cmd:
 docker build -it <CONTAINER_NAME> <CMD/SHELL>
 ```
 
-Rebuild Image:
+### How To Rebuild Image:
 ```bash
 source env.sh
 docker build --tag "${IMAGE_TAG}" --file "ros-${ROS_DISTRO}.Dockerfile" --no-cache .
@@ -64,9 +64,14 @@ docker build --tag "${IMAGE_TAG}" --file "ros-${ROS_DISTRO}.Dockerfile" --no-cac
 
 ## In ROS Humble
 ~~Source environment. These lines can be added to `~/.bashrc` or `~/.zshrc` for convenience.~~
-The following commands have been added to humble dockerfile.
+The following commands have been added to humble dockerfile and will be added to `.bashrc`.
 ```bash
 source /opt/ros/humble/setup.bash
 source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash
-source install/setup.bash   # source <workspace>/install/setup.bash
+```
+
+After compiling, don't forget to source setup file
+```bash
+colcon build --symlink-install
+source install/setup.bash
 ```
