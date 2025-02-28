@@ -7,15 +7,10 @@ You should firstly install [Docker Engine](https://docs.docker.com/engine/instal
 
  * NOTE: Do not install Docker Desktop. It is different from the Docker Engine and not so friendly to docker development.
 
-## ROS Noetic for Franka Panda
-To Create an Image, Run the Container or Open another section in Container, please `cd ros-docker-dev` to enter the dir then run the scripts. 
-```bash
-./enterpoint.sh
-```
-
-## How to use
+## How to use ( two methods )
 This is the cleaned up version. All Options should be defined in config file `env.sh` and `enterpoint.sh` as Environment Variables or by using `export <VAR>=...`.
 
+### Required
 Env override options:
  * ROS_DISTRO: ROS distribution. 
  ```bash
@@ -32,7 +27,7 @@ Env override options:
  export CUDA=1              # or unset CUDA
  ```
 
-### Enter container with scripts
+### Method 1: Enter container with scripts
 In the repository folder, run
 ```bash
 ./enterpoint.sh
@@ -45,7 +40,7 @@ Here is env variables in the `env.sh`. Define those in the `env.sh` or your env 
  * HOME_PATH
  * WORKSPACE_PATH
 
-### Enter container without scripts
+### Method 2: Enter container without scripts
 Build Image: 
 ```bash
 docker build --tag <image tag> --file <dockerfile> --no-cache .     # --no-cache means install dependencies with no cache
