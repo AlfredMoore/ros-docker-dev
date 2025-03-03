@@ -14,7 +14,7 @@ export GIT_LABEL=${GIT_LABEL}
 export ROS_DISTRO="${ROS_DISTRO:-humble}"
 
 # Image Tag and Container Name (override in enterpoint.sh)
-export IMAGE_TAG="AM/ros-${ROS_DISTRO}:${GIT_LABEL}"
+export IMAGE_TAG="am/ros-${ROS_DISTRO}:${GIT_LABEL}"
 export CONTAINER_NAME="${ROS_DISTRO}-container"
 
 # Volume Settings
