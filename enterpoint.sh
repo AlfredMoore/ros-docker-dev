@@ -14,6 +14,7 @@ if ! docker inspect "${IMAGE_TAG}" --type=image &> /dev/null; then
     docker build \
         --tag "$IMAGE_TAG" \
         --file "ros-${ROS_DISTRO}.Dockerfile" \
+        --platform "$(uname)" \
         .
 else
     echo "IMAGE ${IMAGE_TAG} already existing, if you want to build with newest dependecies, please manually build with no cache option"
