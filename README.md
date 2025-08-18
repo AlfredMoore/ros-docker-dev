@@ -14,17 +14,17 @@ This is the cleaned up version. All Options should be defined in config file `en
 Env override options:
  * ROS_DISTRO: choose ROS distribution. 
  ```bash
- export ROS_DISTRO=humble   # or export ROS_DISTRO=noetic
+ export ROS_DISTRO=humble   # options: humble(default), noetic
  ```
  * VOLUME_DIR: volume a folder into container dir `/workspace`.
  ```bash
- export VOLUME_DIR=<path>   # or export VOLUME_DIR=$(pwd)
+ export VOLUME_DIR=<path>   # options: $(pwd)
  ```
  * CUDA: Follow these links to use Nvidia Cuda in container and solve potential problems.
     * [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html)
     * [Error: Failed to initialize NVML: Unknown Error](https://bobcares.com/blog/docker-failed-to-initialize-nvml-unknown-error/)
  ```bash
- export CUDA=1              # or unset CUDA
+ export CUDA=1              # To cancel CUDA: unset CUDA
  ```
 
 ### Method 1: Enter Container with Scripts
